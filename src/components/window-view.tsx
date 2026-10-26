@@ -56,7 +56,7 @@ export function WindowView() {
             />
           ) : (
             <div className="flex h-full items-center justify-center px-6 text-center text-sm text-slate-400">
-              {failed ? "The view is hidden behind clouds. Please try again shortly." : "Opening the curtains…"}
+              {failed ? "Come back again later." : "Opening the curtains…"}
             </div>
           )}
 
