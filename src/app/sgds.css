@@ -1,0 +1,38 @@
+@import "@govtechsg/sgds-web-component/themes/day.css";
+@import "@govtechsg/sgds-web-component/css/sgds.css";
+@import "@govtechsg/sgds-web-component/css/utility.css";
+
+/* SgdsProvider registers the SGDS custom elements inside a useEffect, which
+   runs after the browser's first paint — until that registration completes,
+   <sgds-mainnav-item>/<sgds-mainnav-dropdown> render as unknown elements
+   (default `display: inline`, no padding), so nav labels appear jammed
+   together with no spacing for a brief window. Falls back to a flex layout
+   with spacing until the real component upgrades and takes over styling.
+   This only covers the pre-registration flash — see the rule below for the
+   persistent version of this same symptom, which has a different cause. */
+sgds-mainnav-item:not(:defined),
+sgds-mainnav-dropdown:not(:defined) {
+  display: inline-flex;
+  padding: 0 1rem;
+}
+
+/* Nav items still render with zero spacing AFTER the component registers —
+   confirmed via DevTools: the slotted <a> inside <sgds-mainnav-item> gets its
+   padding from the component's own `::slotted(*)` shadow-DOM rule (sourced
+   from --sgds-padding-sm / --sgds-mainnav-padding-x, both resolving fine —
+   checked with getComputedStyle), but Tailwind's own preflight resets EVERY
+   <a> in the light DOM to `padding: 0` via its global `*` selector
+   (globals.css), which wins the specificity fight because the <a> is a
+   normal light-DOM element, not inside the component's shadow root. Restate
+   the real padding here with a selector specific enough to beat Tailwind's
+   reset, matching the values the component's own CSS would have applied. */
+sgds-mainnav-item a,
+sgds-mainnav-dropdown a {
+  padding: var(--sgds-padding-sm) var(--sgds-mainnav-mobile-padding-x);
+}
+@media screen and (min-width: 1024px) {
+  sgds-mainnav-item a,
+  sgds-mainnav-dropdown a {
+    padding: var(--sgds-padding-sm) var(--sgds-mainnav-padding-x);
+  }
+}
