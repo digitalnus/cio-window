@@ -13,6 +13,10 @@ export default function Home() {
         <p className="mx-auto mt-10 max-w-2xl text-center text-base leading-7 text-white sm:text-lg">
           To my fellow colleagues and public officers who do not have access to a window, this site is dedicated to you.
         </p>
+
+        <p className="mt-6 text-center text-sm text-white">
+          Alfred Leong (HSA) - #TechForPublicGood
+        </p>
       </div>
     </div>
   );
