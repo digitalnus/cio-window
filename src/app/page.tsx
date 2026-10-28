@@ -1,3 +1,4 @@
+import { PsiTicker } from "@/components/psi-ticker";
 import { WindowView } from "@/components/window-view";
 
 export default function Home() {
@@ -7,6 +8,8 @@ export default function Home() {
         <h1 className="mb-10 text-center text-3xl font-semibold tracking-tight text-white sm:mb-14 sm:text-4xl lg:text-5xl">
           Your view to the world outside
         </h1>
+
+        <PsiTicker />
 
         <WindowView />
 

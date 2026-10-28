@@ -146,3 +146,13 @@ nextjs-portal,
 #__next-build-indicator {
   display: none !important;
 }
+/* PSI ticker */
+@keyframes psi-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-25%); }
+}
+.psi-track { animation: psi-scroll 20s linear infinite; }
+.psi-marquee:hover .psi-track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .psi-track { animation: none; }
+}
