@@ -27,11 +27,14 @@ export async function GET() {
     const slot = Math.floor(Date.now() / (15 * 60 * 1000));
     const camera = cameras[slot % cameras.length];
 
-    return NextResponse.json({
-      image: camera.image,
-      timestamp: camera.timestamp,
-      cameraId: camera.camera_id,
-    });
+    return NextResponse.json(
+      {
+        image: camera.image,
+        timestamp: camera.timestamp,
+        cameraId: camera.camera_id,
+      },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   } catch {
     return NextResponse.json({ error: "Unable to load the view" }, { status: 502 });
   }

@@ -24,19 +24,24 @@ const schema = z.object({
   }),
 });
 
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   try {
     const res = await fetch("https://api-open.data.gov.sg/v2/real-time/api/psi", {
-      next: { revalidate: 3600 },
+      cache: "no-store",
     });
     if (!res.ok) throw new Error("Upstream failed");
     const parsed = schema.parse(await res.json());
     const item = parsed.data.items[parsed.data.items.length - 1];
     const psi = item.readings.psi_twenty_four_hourly;
-    return NextResponse.json({
-      timestamp: item.timestamp,
-      readings: REGIONS.map((region) => ({ region, psi: psi[region] })),
-    });
+    return NextResponse.json(
+      {
+        timestamp: item.timestamp,
+        readings: REGIONS.map((region) => ({ region, psi: psi[region] })),
+      },
+      { headers: { "Cache-Control": "no-store" } },
+    );
   } catch {
     return NextResponse.json({ error: "Unable to load PSI" }, { status: 502 });
   }
