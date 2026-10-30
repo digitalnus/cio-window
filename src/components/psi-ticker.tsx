@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 
-const REFRESH_MS = 60 * 60 * 1000;
+const REFRESH_MS = 5 * 60 * 1000;
 
 interface Reading {
   region: string;
@@ -101,7 +101,7 @@ export function PsiTicker() {
         </div>
       </div>
       <p className="mt-2 text-center text-xs text-white">
-        {data ? `Source: NEA · updated ${formatTime(data.timestamp)} · refreshes every hour` : " "}
+        {data ? `Source: NEA · updated ${formatTime(data.timestamp)} · refreshes every 5 minutes` : " "}
       </p>
     </div>
   );
