@@ -12,7 +12,7 @@ import {
 const MIN_GAP_MS = 60 * 1000;
 const MAX_GAP_MS = 3 * 60 * 1000;
 // Crawlers only appear at night, Singapore time: from 8pm until 1am the next morning.
-const START_HOUR = 20;
+const START_HOUR = 19;
 const END_HOUR = 1;
 // Length of one crawl.
 const CRAWL_MS = 16000;
