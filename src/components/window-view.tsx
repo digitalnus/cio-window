@@ -1,6 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { WindowCrawler } from "@/components/window-crawler";
 
 const REFRESH_MS = 5 * 60 * 1000;
 
@@ -23,6 +25,8 @@ function formatTime(iso: string) {
 export function WindowView() {
   const [view, setView] = useState<View | null>(null);
   const [failed, setFailed] = useState(false);
+  const [crawling, setCrawling] = useState(false);
+  const paneRef = useRef<HTMLDivElement>(null);
 
   const load = useCallback(async () => {
     try {
@@ -42,11 +46,14 @@ export function WindowView() {
   }, [load]);
 
   return (
-    <figure className="mx-auto w-full max-w-4xl">
+    <figure className="relative mx-auto w-full max-w-4xl">
       {/* Outer window frame */}
       <div className="rounded-sm bg-gradient-to-b from-stone-200 to-stone-400 p-4 shadow-2xl shadow-black/60 sm:p-6">
         {/* Inner frame / glass */}
-        <div className="relative aspect-video overflow-hidden bg-slate-900 ring-4 ring-stone-500/70">
+        <div
+          ref={paneRef}
+          className={`relative aspect-video overflow-hidden bg-slate-900 ring-4 ring-stone-500/70 ${crawling ? "window-flicker" : ""}`}
+        >
           {view ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -67,6 +74,8 @@ export function WindowView() {
 
       {/* Window sill */}
       <div className="mx-auto -mt-px h-4 w-[104%] -translate-x-[2%] rounded-b-md bg-gradient-to-b from-stone-400 to-stone-600 shadow-xl shadow-black/60" />
+
+      <WindowCrawler paneRef={paneRef} onActive={setCrawling} />
 
       <figcaption className="mt-4 text-center text-xs text-white">
         {view ? `Snapshot taken ${formatTime(view.timestamp)} · refreshes every 5 minutes` : " "}

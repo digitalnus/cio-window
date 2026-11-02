@@ -156,3 +156,24 @@ nextjs-portal,
 @media (prefers-reduced-motion: reduce) {
   .psi-track { animation: none; }
 }
+
+
+/* Brief unsettling flicker on the window view while a crawler is on its way. */
+@keyframes window-flicker {
+  0%, 100% { filter: none; }
+  8% { filter: brightness(0.55) contrast(1.3); }
+  10% { filter: brightness(1.2); }
+  41% { filter: none; }
+  43% { filter: brightness(0.5) grayscale(0.6); }
+  46% { filter: none; }
+  78% { filter: brightness(0.7) contrast(1.2); }
+  80% { filter: none; }
+}
+
+.window-flicker {
+  animation: window-flicker 9s steps(1, end);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .window-flicker { animation: none; }
+}
